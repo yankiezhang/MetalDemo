@@ -17,6 +17,7 @@
     id<MTLRenderPipelineState> _pipelineState;
     id<MTLDepthStencilState> _depthState;
     id<MTLCommandQueue> _commandQueue;
+    id<MTLBuffer> _vertexBuffer;
 }
 
 @end
@@ -27,14 +28,22 @@
 {
     self = [super initWithCoder:coder];
     if (self) {
+        self.depthStencilPixelFormat = MTLPixelFormatDepth32Float_Stencil8;
+        self.colorPixelFormat = MTLPixelFormatBGRA8Unorm_sRGB;
+        self.sampleCount = 1;
+        self.backgroundColor = UIColor.blackColor;
         NSLog(@"Will init MTKView for Demo");
     }
-    return [[self initDevice] bind];
+    return [[[self initDevice] bind] load];
 }
 
 - (nonnull instancetype)initDevice
 {
-    NSAssert(self.device != nil, @"GPU of view is nil");
+    self.device = MTLCreateSystemDefaultDevice();
+    if (!self.device) {
+        NSLog(@"Create GPU device fail");
+        return nil;
+    }
     _defaultLibrary = self.device.newDefaultLibrary;
     _vertexFunction = [_defaultLibrary newFunctionWithName:@"vertexShader"];
     _fragmentFunction = [_defaultLibrary newFunctionWithName:@"fragmentShader"];
@@ -69,7 +78,7 @@
     
     NSError *error = nil;
     
-    NSAssert(self.device, @"device is nil");
+    NSAssert(self.device != nil, @"GPU device is nil");
     _pipelineState = [self.device newRenderPipelineStateWithDescriptor:pipelineStateDescriptor error:&error];
     
     if (!_pipelineState) {
@@ -84,7 +93,54 @@
     _depthState = [self.device newDepthStencilStateWithDescriptor:depthStateDesc];
     _commandQueue = [self.device newCommandQueue];
     
+    if (!_depthState || !_commandQueue) {
+        NSLog(@"Create depthstate or commandqueue failed");
+        return nil;
+    }
+    
     return self;
+}
+
+- (nonnull instancetype)load
+{
+    static const Vertex vert[] = {
+        {{0,1.0}},
+        {{1.0,-1.0}},
+        {{-1.0,-1.0}},
+    };
+    
+    _vertexBuffer = [self.device newBufferWithBytes:vert length:sizeof(vert) options:MTLResourceStorageModeShared];
+    return self;
+}
+
+- (void)draw
+{
+    [self renderWith:[_commandQueue commandBuffer]];
+}
+
+- (void)renderWith:(nonnull id<MTLCommandBuffer>)commandBuffer {
+    commandBuffer.label = @"MyCommand";
+    MTLRenderPassDescriptor *renderPassDescriptor = self.currentRenderPassDescriptor;
+    
+    if (renderPassDescriptor == nil) {
+        
+        return;
+    }
+    
+    id<MTLRenderCommandEncoder> renderEncoder = [commandBuffer renderCommandEncoderWithDescriptor:renderPassDescriptor];
+    renderEncoder.label = @"MyRenderEncoder";
+    
+    [renderEncoder pushDebugGroup:@"DrawTriangle"];
+    [renderEncoder setRenderPipelineState:_pipelineState];
+    [renderEncoder setDepthStencilState:_depthState];
+    [renderEncoder setVertexBuffer:_vertexBuffer offset:0 atIndex:0];
+    [renderEncoder drawPrimitives:MTLPrimitiveTypeTriangle vertexStart:0 vertexCount:3];
+    [renderEncoder popDebugGroup];
+    
+    [renderEncoder endEncoding];
+    
+    [commandBuffer presentDrawable:self.currentDrawable];
+    [commandBuffer commit];
 }
 
 @end

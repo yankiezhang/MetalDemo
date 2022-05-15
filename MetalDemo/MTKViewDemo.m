@@ -8,6 +8,7 @@
 #import "MTKViewDemo.h"
 #import <Metal/MTLDevice.h>
 #import "ShaderTypes.h"
+#import "Vector.hpp"
 
 @interface MTKViewDemo()
 {
@@ -26,6 +27,8 @@
 
 - (instancetype)initWithCoder:(NSCoder *)coder
 {
+    zy::Vector<int, 3> v;
+
     self = [super initWithCoder:coder];
     if (self) {
         self.depthStencilPixelFormat = MTLPixelFormatDepth32Float_Stencil8;

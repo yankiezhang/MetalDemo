@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		DE239020282A9B51000157A9 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = DE23901F282A9B51000157A9 /* Shaders.metal */; };
 		DE239023282AB3C6000157A9 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE239022282AB3C6000157A9 /* Accelerate.framework */; };
+		DE25055D283096B8008D472F /* Vector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DE25055B283096B8008D472F /* Vector.cpp */; };
 		DEA76908282828480015FE1C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DEA76907282828480015FE1C /* AppDelegate.m */; };
 		DEA7690B282828480015FE1C /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DEA7690A282828480015FE1C /* SceneDelegate.m */; };
 		DEA7690E282828480015FE1C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DEA7690D282828480015FE1C /* ViewController.m */; };
@@ -25,6 +26,8 @@
 		DE23901F282A9B51000157A9 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		DE239021282A9D2F000157A9 /* ShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderTypes.h; sourceTree = "<group>"; };
 		DE239022282AB3C6000157A9 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		DE25055B283096B8008D472F /* Vector.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Vector.cpp; sourceTree = "<group>"; };
+		DE25055C283096B8008D472F /* Vector.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Vector.hpp; sourceTree = "<group>"; };
 		DEA76903282828480015FE1C /* MetalDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MetalDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEA76906282828480015FE1C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		DEA76907282828480015FE1C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -39,8 +42,8 @@
 		DEA76918282828480015FE1C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		DEA7692028282A3E0015FE1C /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
 		DEA7692228282A830015FE1C /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
-		DEA7692428282A9F0015FE1C /* MTKViewDemo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTKViewDemo.h; sourceTree = "<group>"; };
-		DEA7692528282A9F0015FE1C /* MTKViewDemo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MTKViewDemo.m; sourceTree = "<group>"; };
+		DEA7692428282A9F0015FE1C /* MTKViewDemo.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp.preprocessed; path = MTKViewDemo.h; sourceTree = "<group>"; };
+		DEA7692528282A9F0015FE1C /* MTKViewDemo.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = MTKViewDemo.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +60,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DE25055A28309691008D472F /* Math */ = {
+			isa = PBXGroup;
+			children = (
+				DE25055B283096B8008D472F /* Vector.cpp */,
+				DE25055C283096B8008D472F /* Vector.hpp */,
+			);
+			path = Math;
+			sourceTree = "<group>";
+		};
 		DEA768FA282828480015FE1C = {
 			isa = PBXGroup;
 			children = (
@@ -77,6 +89,7 @@
 		DEA76905282828480015FE1C /* MetalDemo */ = {
 			isa = PBXGroup;
 			children = (
+				DE25055A28309691008D472F /* Math */,
 				DE23901F282A9B51000157A9 /* Shaders.metal */,
 				DE239021282A9D2F000157A9 /* ShaderTypes.h */,
 				DEA76906282828480015FE1C /* AppDelegate.h */,
@@ -177,6 +190,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DE239020282A9B51000157A9 /* Shaders.metal in Sources */,
+				DE25055D283096B8008D472F /* Vector.cpp in Sources */,
 				DEA7690E282828480015FE1C /* ViewController.m in Sources */,
 				DEA7692628282A9F0015FE1C /* MTKViewDemo.m in Sources */,
 				DEA76908282828480015FE1C /* AppDelegate.m in Sources */,

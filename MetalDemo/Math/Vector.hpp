@@ -18,6 +18,8 @@ class Vector {
 public:
     Vector<Type, Size>(Type a = 0);
     
+    const Type& operator[](int i) const { return _array[i]; }
+    
 private:
     Type _array[Size];
 };

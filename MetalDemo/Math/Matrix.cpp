@@ -25,4 +25,15 @@ template <typename Type, int Row, int Col>
              _matrix[i][j] = m[i][j];
 }
 
+#pragma mark - Operator
+
+template <typename Type, int Row, int Col>
+const Matrix<Type, Row, Col>&  Matrix<Type, Row, Col>::operator+=(const Matrix<Type, Row, Col> &m) {
+    for (int i = 0; i < Row; i++) 
+        for (int j = 0; j < Col; j++)
+            _matrix[i][j] = m[i][j];
+
+    return *this;
+}
+
 #endif

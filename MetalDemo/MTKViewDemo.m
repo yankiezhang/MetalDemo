@@ -9,6 +9,7 @@
 #import <Metal/MTLDevice.h>
 #import "ShaderTypes.h"
 #import "Vector.hpp"
+#import "Matrix.hpp"
 
 @interface MTKViewDemo()
 {
@@ -27,8 +28,6 @@
 
 - (instancetype)initWithCoder:(NSCoder *)coder
 {
-    zy::Vector<int, 3> v;
-
     self = [super initWithCoder:coder];
     if (self) {
         self.depthStencilPixelFormat = MTLPixelFormatDepth32Float_Stencil8;
@@ -106,13 +105,15 @@
 
 - (nonnull instancetype)load
 {
-    static const Vertex vert[] = {
-        {{0,1.0}},
-        {{1.0,-1.0}},
-        {{-1.0,-1.0}},
+    const float vert[3][2] = {
+        {0.0f,1.0f},
+        {1.0f,-1.0f},
+        {-1.0f,-1.0f},
     };
     
-    _vertexBuffer = [self.device newBufferWithBytes:vert length:sizeof(vert) options:MTLResourceStorageModeShared];
+    zy::Matrix<float, 3, 2> m(vert);
+    
+    _vertexBuffer = [self.device newBufferWithBytes:&m length:sizeof(vert) options:MTLResourceStorageModeShared];
     return self;
 }
 

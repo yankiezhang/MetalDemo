@@ -9,13 +9,12 @@
 #define Vector_cpp
 
 #include "Vector.hpp"
-
 using namespace zy;
 
 template <typename Type, int Size>
  Vector<Type, Size>::Vector(Type a) {
      for (int i = 0; i < Size; i++) {
-         array[i] = a;
+         _array[i] = a;
      }
 }
 

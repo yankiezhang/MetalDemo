@@ -19,8 +19,7 @@ public:
     Vector<Type, Size>(Type a = 0);
     
 private:
-    Type array[Size];
-    
+    Type _array[Size];
 };
 
 #include "Vector.cpp"

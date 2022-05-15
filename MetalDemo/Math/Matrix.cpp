@@ -9,6 +9,8 @@
 #define Matrix_cpp
 
 #include "Matrix.hpp"
+#include <exception>
+
 using namespace zy;
 
 template <typename Type, int Row, int Col>
@@ -36,15 +38,17 @@ const Matrix<Type, Row, Col>&  Matrix<Type, Row, Col>::operator+=(const Matrix<T
     return *this;
 }
 
-#pragma mark - Matrix<Type *, Row, Col>
+#pragma mark - Matrix<Type*, Row, Col>
 
 template <typename Type, int Row, int Col>
 const Matrix<Type*, Row, Col>& Matrix<Type*, Row, Col>::operator+=(const Type &a) {
     for (int i = 0; i < Row; i++) {
         for (int j = 0; j < Col; j++) {
-            
+            (*this)[i][j] += a;
         }
     }
+    
+    return *this;
 }
 
 #endif

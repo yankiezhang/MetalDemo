@@ -11,6 +11,7 @@
 #include <stdio.h>
 
 #include "Vector.hpp"
+#include <stdexcept>
 
 namespace zy {
 
@@ -33,10 +34,10 @@ template <typename Type, int Row, int Col>
 class Matrix<Type*, Row, Col> {
     
 public:
-    Matrix<Type*, Row, Col>(const Type (*p)[Row][Col] = NULL):_pMatrix(p){}
+    Matrix<Type*, Row, Col>(Type (*p)[Row][Col] = NULL):_pMatrix(p){}
     
-    bool operator !() const { return _pMatrix != NULL ? true : false; }
-    const Type (&operator[](int i) const )[Col] { return (*_pMatrix)[i]; }
+    bool operator !() const { return _pMatrix == NULL ? true : false; }
+    const Type (&operator[](int i) const )[Col] { if (!*this) throw std::runtime_error("Null Pointer XXX"); return (*_pMatrix)[i]; }
     const Matrix<Type*, Row, Col>& operator+=(const Type &a);
     
 private:

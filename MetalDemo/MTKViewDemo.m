@@ -112,6 +112,7 @@
     };
     
     zy::Matrix<float, 3, 2> m(vert);
+    m += .5f;
     
     _vertexBuffer = [self.device newBufferWithBytes:&m length:sizeof(vert) options:MTLResourceStorageModeShared];
     return self;

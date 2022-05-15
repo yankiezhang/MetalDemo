@@ -12,7 +12,7 @@
 using namespace zy;
 
 template <typename Type, int Row, int Col>
- Matrix<Type, Row, Col>::Matrix(Type m) {
+ Matrix<Type, Row, Col>::Matrix(const Type& m) {
      for (int i = 0; i < Row; i++)
          for (int j = 0; j < Col; j++)
              _matrix[i][j] = m;
@@ -34,6 +34,17 @@ const Matrix<Type, Row, Col>&  Matrix<Type, Row, Col>::operator+=(const Matrix<T
             _matrix[i][j] += m[i][j];
 
     return *this;
+}
+
+#pragma mark - Matrix<Type *, Row, Col>
+
+template <typename Type, int Row, int Col>
+const Matrix<Type*, Row, Col>& Matrix<Type*, Row, Col>::operator+=(const Type &a) {
+    for (int i = 0; i < Row; i++) {
+        for (int j = 0; j < Col; j++) {
+            
+        }
+    }
 }
 
 #endif

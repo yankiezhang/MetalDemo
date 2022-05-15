@@ -10,23 +10,38 @@
 
 #include <stdio.h>
 
-namespace zy {
+#include "Vector.hpp"
 
-template <typename Type, int Size> class Vector;
+namespace zy {
 
 template <typename Type, int Row, int Col>
 class Matrix {
-    
+        
 public:
-    Matrix<Type, Row, Col>(Type m = 0);
+    Matrix<Type, Row, Col>(const Type &m = 0);
     Matrix<Type, Row, Col>(const Type (&m)[Row][Col]);
     
-    const Type (*operator &() const)[Row][Col] { return &_matrix; }
-    const Type (&operator[](int i) const)[Col] { return _matrix[i];}
+    const Type (*operator &() const )[Row][Col] { return &_matrix; }
+    const Type (&operator[](int i) const )[Col] { return _matrix[i];}
     const Matrix<Type, Row, Col>& operator+=(const Matrix<Type, Row, Col>& m);
 
 private:
     Type _matrix[Row][Col];
+};
+
+template <typename Type, int Row, int Col>
+class Matrix<Type*, Row, Col> {
+    
+public:
+    Matrix<Type*, Row, Col>(const Type (*p)[Row][Col] = NULL):_pMatrix(p){}
+    
+    bool operator !() const { return _pMatrix != NULL ? true : false; }
+    const Type (&operator[](int i) const )[Col] { return (*_pMatrix)[i]; }
+    const Matrix<Type*, Row, Col>& operator+=(const Type &a);
+    
+private:
+    Type (*_pMatrix)[Row][Col];
+    
 };
 
 }
